@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Month from "./components/Month";
 import Sidebar from "./components/Sidebar";
 import { getMonth } from "./utill";
+import GlobalContext from "./context/GlobalContext";
 
-export default function App() {
+function App() {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
+  const { monthIndex } = useContext(GlobalContext);
+
+  useEffect(() => {
+    setCurrentMonth(getMonth(monthIndex));
+  }, [monthIndex]);
+
   return (
     <React.Fragment>
-      <div className="h-screen flex-columns">
+      <div className="h-screen flex-col">
         <Header />
         <div className="flex flex-1">
           <Sidebar />
@@ -18,3 +25,4 @@ export default function App() {
     </React.Fragment>
   );
 }
+export default App;
