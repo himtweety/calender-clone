@@ -6,7 +6,8 @@ import GlobalContext from "../context/GlobalContext";
 const SidebarMiniCal = () => {
   const [currrentMonthIdx, setCurrrentMonthIdx] = useState(dayjs().month());
   const [currrentMonth, setCurrrentMonth] = useState(getMonth());
-  const { monthIndex } = useContext(GlobalContext);
+  const { monthIndex, setMiniCalMonth, selectedDay, setSelectedDay } =
+    useContext(GlobalContext);
   useEffect(() => {
     setCurrrentMonthIdx(monthIndex);
   }, [monthIndex]);
@@ -24,8 +25,11 @@ const SidebarMiniCal = () => {
     const format = "DD-MM-YY";
     const nowDay = dayjs().format(format);
     const currDay = day.format(format);
+    const slcDay = selectedDay && selectedDay.format(format);
     if (nowDay === currDay) {
       return "bg-blue-500 rounded-full text-white";
+    } else if (currDay === slcDay) {
+      return "bg-blue-100 rounded-full text-blue-600 font-bold";
     } else return "";
   };
   return (
@@ -54,7 +58,14 @@ const SidebarMiniCal = () => {
         {currrentMonth.map((row, i) => (
           <React.Fragment key={i}>
             {row.map((day, j) => (
-              <button key={j} className={`py-1 w-full ${getDayClass(day)}`}>
+              <button
+                key={j}
+                onClick={() => {
+                  setMiniCalMonth(currrentMonthIdx);
+                  setSelectedDay(day);
+                }}
+                className={`py-1 w-full ${getDayClass(day)}`}
+              >
                 <span className="text-sm">{day.format("D")}</span>
               </button>
             ))}
