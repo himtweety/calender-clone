@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import React from "react";
+import React, { useContext } from "react";
+import GlobalContext from "../context/GlobalContext";
 
 function Day({ day, rowIdx }) {
   const getCurrentDayClass = () => {
@@ -7,6 +8,7 @@ function Day({ day, rowIdx }) {
       ? "bg-blue-600 rounded-full w-7"
       : "";
   };
+  const { setSelectedDay, setShowEventModal } = useContext(GlobalContext);
   return (
     <div className="border border-gray-400 flex flex-col">
       <header className="flex flex-col items-center">
@@ -17,6 +19,15 @@ function Day({ day, rowIdx }) {
           {day.format("DD")}
         </p>
       </header>
+      <div
+        className="flex-1 cursor-pointer"
+        onClick={() => {
+          setSelectedDay(day);
+          setShowEventModal(true);
+        }}
+      >
+        {}
+      </div>
     </div>
   );
 }
