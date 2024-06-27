@@ -3,10 +3,23 @@ import GlobalContext from "../context/GlobalContext";
 
 const labelsClass = ["indigo", "gray", "green", "blue", "red", "purple"];
 function EventModal() {
-  const { selectedDay, setShowEventModal } = useContext(GlobalContext);
+  const { selectedDay, setShowEventModal, dispatchCallEvent } =
+    useContext(GlobalContext);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [selLabel, setSelLabel] = useState(labelsClass[0]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const calendarEvent = {
+      title: "",
+      desc: "",
+      label: selLabel,
+      day: selectedDay.valueOf(),
+      id: Date.now(),
+    };
+    dispatchCallEvent({ type: "push", payload: calendarEvent });
+    setShowEventModal(false);
+  };
   return (
     <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
       <form className="bg-white rounded-lg shadow-2xl w-1/4">
@@ -68,6 +81,15 @@ function EventModal() {
             </div>
           </div>
         </div>
+        <footer className="flex justify-end w-100 border-t p-3 mt-5">
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
+          >
+            Save
+          </button>
+        </footer>
       </form>
     </div>
   );
