@@ -11,8 +11,7 @@ export default {
     'bg-purple-200', 'bg-purple-500',
     'bg-red-200', 'bg-red-500',
     'bg-gray-200', 'bg-gray-500',
-    'text-3xl',
-    'lg:text-4xl',
+    'text-3xl', 'lg:text-4xl',
   ],
   theme: {
     extend: {

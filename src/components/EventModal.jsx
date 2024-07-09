@@ -3,21 +3,27 @@ import GlobalContext from "../context/GlobalContext";
 
 const labelsClass = ["indigo", "gray", "green", "blue", "red", "purple"];
 function EventModal() {
-  const { selectedDay, setShowEventModal, dispatchCallEvent } =
+  const { selectedDay, setShowEventModal, dispatchCallEvent, selectEvent } =
     useContext(GlobalContext);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [selLabel, setSelLabel] = useState(labelsClass[0]);
+  const [title, setTitle] = useState(selectEvent ? selectEvent.title : "");
+  const [desc, setDesc] = useState(selectEvent ? selectEvent.desc : "");
+  const [selLabel, setSelLabel] = useState(
+    selectEvent
+      ? labelsClass.find((lbl) => lbl === selectEvent.label)
+      : labelsClass[0]
+  );
   const handleSubmit = (e) => {
     e.preventDefault();
     const calendarEvent = {
-      title: "",
-      desc: "",
+      title: title,
+      desc: desc,
       label: selLabel,
       day: selectedDay.valueOf(),
-      id: Date.now(),
+      id: selectEvent ? selectEvent.id : Date.now(),
     };
-    dispatchCallEvent({ type: "push", payload: calendarEvent });
+    if (selectEvent) {
+      dispatchCallEvent({ type: "update", payload: calendarEvent });
+    } else dispatchCallEvent({ type: "push", payload: calendarEvent });
     setShowEventModal(false);
   };
   return (
@@ -27,9 +33,25 @@ function EventModal() {
           <span className="material-icons-outlined text-gray-400">
             drag_handle
           </span>
-          <button onClick={() => setShowEventModal(false)}>
-            <span className="material-icons-outlined text-gray-400">close</span>
-          </button>
+          <div>
+            {selectEvent && (
+              <span
+                onClick={() => {
+                  dispatchCallEvent({ type: "delete", payload: selectEvent });
+                  setShowEventModal(false);
+                }}
+                className="material-icons-outlined text-gray-400 cursor-pointer"
+              >
+                delete
+              </span>
+            )}
+
+            <button onClick={() => setShowEventModal(false)}>
+              <span className="material-icons-outlined text-gray-400">
+                close
+              </span>
+            </button>
+          </div>
         </header>
         <div className="p-3">
           <div className="grid grid-cols-1/5 items-end gap-y-7">

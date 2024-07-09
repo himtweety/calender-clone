@@ -24,6 +24,7 @@ function ContextWrapper(props) {
   const [miniCalMonth, setMiniCalMonth] = useState(null);
   const [selectedDay, setSelectedDay] = useState(dayjs());
   const [showEventModal, setShowEventModal] = useState(false);
+  const [selectEvent, setSelectEvent] = useState(null);
   const [savedEvents, dispatchCallEvent] = useReducer(
     savedEventReducer,
     [],
@@ -50,7 +51,9 @@ function ContextWrapper(props) {
         showEventModal,
         setShowEventModal,
         dispatchCallEvent,
-        savedEvents
+        selectEvent,
+        setSelectEvent,
+        savedEvents,
       }}
     >
       {props.children}

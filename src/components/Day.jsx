@@ -8,7 +8,7 @@ function Day({ day, rowIdx }) {
       ? "bg-blue-600 rounded-full w-7"
       : "";
   };
-  const { setSelectedDay, setShowEventModal, savedEvents } =
+  const { setSelectedDay, setShowEventModal, savedEvents, setSelectEvent } =
     useContext(GlobalContext);
   const [dayEvents, setDayEvents] = useState([]);
   useEffect(() => {
@@ -38,6 +38,7 @@ function Day({ day, rowIdx }) {
         {dayEvents.map((evt, idx) => (
           <div
             key={idx}
+            onClick={() => setSelectEvent(evt)}
             className={`bg-${evt.label}-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}
           >
             {evt.title}
