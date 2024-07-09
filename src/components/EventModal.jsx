@@ -3,8 +3,13 @@ import GlobalContext from "../context/GlobalContext";
 
 const labelsClass = ["indigo", "gray", "green", "blue", "red", "purple"];
 function EventModal() {
-  const { selectedDay, setShowEventModal, dispatchCallEvent, selectEvent } =
-    useContext(GlobalContext);
+  const {
+    selectedDay,
+    setShowEventModal,
+    dispatchCallEvent,
+    selectEvent,
+    setSelectEvent,
+  } = useContext(GlobalContext);
   const [title, setTitle] = useState(selectEvent ? selectEvent.title : "");
   const [desc, setDesc] = useState(selectEvent ? selectEvent.desc : "");
   const [selLabel, setSelLabel] = useState(
@@ -15,8 +20,8 @@ function EventModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const calendarEvent = {
-      title: title,
-      desc: desc,
+      title,
+      desc,
       label: selLabel,
       day: selectedDay.valueOf(),
       id: selectEvent ? selectEvent.id : Date.now(),
@@ -25,6 +30,7 @@ function EventModal() {
       dispatchCallEvent({ type: "update", payload: calendarEvent });
     } else dispatchCallEvent({ type: "push", payload: calendarEvent });
     setShowEventModal(false);
+    setSelectEvent(null);
   };
   return (
     <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
@@ -46,7 +52,12 @@ function EventModal() {
               </span>
             )}
 
-            <button onClick={() => setShowEventModal(false)}>
+            <button
+              onClick={() => {
+                setShowEventModal(false);
+                setSelectEvent(null);
+              }}
+            >
               <span className="material-icons-outlined text-gray-400">
                 close
               </span>

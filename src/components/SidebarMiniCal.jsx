@@ -53,7 +53,7 @@ const SidebarMiniCal = () => {
       </header>
       <div className="grid grid-cols-7 grid-rows-6">
         {currrentMonth[0].map((day, i) => (
-          <span>{day.format("dd").charAt(0)}</span>
+          <span key={i}>{day.format("dd").charAt(0)}</span>
         ))}
         {currrentMonth.map((row, i) => (
           <React.Fragment key={i}>
