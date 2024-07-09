@@ -38,10 +38,7 @@ function Day({ day, rowIdx }) {
         {dayEvents.map((evt, idx) => (
           <div
             key={idx}
-            onClick={() => {
-              setSelectEvent(evt);
-              return false;
-            }}
+            onClick={() => setSelectEvent(evt)}
             className={`bg-${evt.label}-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}
           >
             {evt.title}

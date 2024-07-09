@@ -36,6 +36,9 @@ function ContextWrapper(props) {
   }, [savedEvents]);
 
   useEffect(() => {
+    if (showEventModal === false) setSelectEvent(null);
+  }, [showEventModal]);
+  useEffect(() => {
     setLabels((prevLabels) => {
       return [...new Set(savedEvents.map((evt) => evt.label))].map((label) => {
         {
@@ -87,7 +90,7 @@ function ContextWrapper(props) {
         setLabels,
         labels,
         updateLabel,
-        filteredEvents
+        filteredEvents,
       }}
     >
       {props.children}

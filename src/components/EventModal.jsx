@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 
 const labelsClass = ["indigo", "gray", "green", "blue", "red", "purple"];
@@ -30,7 +30,6 @@ function EventModal() {
       dispatchCallEvent({ type: "update", payload: calendarEvent });
     } else dispatchCallEvent({ type: "push", payload: calendarEvent });
     setShowEventModal(false);
-    setSelectEvent(null);
   };
   return (
     <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
@@ -52,12 +51,7 @@ function EventModal() {
               </span>
             )}
 
-            <button
-              onClick={() => {
-                setShowEventModal(false);
-                setSelectEvent(null);
-              }}
-            >
+            <button onClick={() => setShowEventModal(false)}>
               <span className="material-icons-outlined text-gray-400">
                 close
               </span>
